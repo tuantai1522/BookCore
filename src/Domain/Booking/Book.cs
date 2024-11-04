@@ -1,47 +1,34 @@
-﻿using Domain.Authoring;
+﻿using BookCore.Domain.Authoring;
+using BookCore.Shared;
 using Shared;
 
-namespace Domain.Booking;
+namespace BookCore.Domain.Booking;
 
-public sealed class Book :
-    Entity, IAggregateRoot
+public sealed class Book(string title, string description, DateTime publishedOn, decimal price)
+    : AggregateRoot<Book, Guid>
 {
-    public string Title { get; private set; } = default!;
-    public string Description { get; private set; } = default!;
-    public DateTime PublishedOn { get; private set; }
-    public decimal Price { get; private set; }
+    public string Title { get; private set; } = title;
+    public string Description { get; private set; } = description;
+    public DateTime PublishedOn { get; private set; } = publishedOn;
+    public decimal Price { get; private set; } = price;
 
     //-----------------------------------------------
     //relationships
 
-    public IReadOnlyCollection<BookAuthor> Authors => [.. _authors];
+    public IReadOnlyCollection<Author> Authors => [.. _authors];
 
-    private ICollection<BookAuthor> _authors = [];
+    private ICollection<Author> _authors = [];
 
-    public IReadOnlyCollection<BookPriceOffer> PriceOffers => [.. _priceOffers];
+    public IReadOnlyCollection<BookPriceOffer> BookPriceOffers => [.. _bookPriceOffers];
 
-    private ICollection<BookPriceOffer> _priceOffers = [];
+    private ICollection<BookPriceOffer> _bookPriceOffers = [];
 
     public IReadOnlyCollection<Review> Reviews => [.. _reviews];
 
     private ICollection<Review> _reviews = [];
 
-    //contructors
-    private Book(string title, string description, DateTime publishedOn, decimal price)
-    {
-        Title = title;
-        Description = description;
-        PublishedOn = publishedOn;
-        Price = price;
-    }
-
     //methods
-    public static Result<Book> Create(
-        string title,
-        string description,
-        DateTime publishedOn,
-        decimal price
-        )
+    public static Result<Book> Create(string title, string description, DateTime publishedOn, decimal price)
     {
         // Validate
         if (price < 0)
@@ -53,18 +40,11 @@ public sealed class Book :
         return Result.Success(book);
     }
 
-    public void AddAuthor(Author author)
+    public void AddPriceOffer(PriceOffer priceOffer, DateTime startDate, DateTime endDate)
     {
-        Result<BookAuthor> bookAuthor = BookAuthor.Create(Id, author.Id);
+        Result<BookPriceOffer> bookPriceOffer = BookPriceOffer.Create(Id, priceOffer.Id, startDate, endDate);
 
-        _authors.Add(bookAuthor.Value);
-    }
-
-    public void AddPriceOffer(PriceOffer priceOffer)
-    {
-        Result<BookPriceOffer> bookPriceOffer = BookPriceOffer.Create(Id, priceOffer.Id);
-
-        _priceOffers.Add(bookPriceOffer.Value);
+        _bookPriceOffers.Add(bookPriceOffer.Value);
     }
 
     public void AddReview(Review review)

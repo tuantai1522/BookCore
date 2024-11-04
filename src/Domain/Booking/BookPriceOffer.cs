@@ -1,24 +1,19 @@
-﻿using Domain.Authoring;
-using Shared;
+﻿using Shared;
 
-namespace Domain.Booking;
+namespace BookCore.Domain.Booking;
 
-public sealed class BookPriceOffer
+public sealed class BookPriceOffer(Guid bookId, Guid priceOfferId, DateTime startDate, DateTime endDate)
 {
-    public Guid BookId { get; private set; }
+    public Guid BookId { get; private set; } = bookId;
 
-    public Guid PriceOfferId { get; private set; }
+    public Guid PriceOfferId { get; private set; } = priceOfferId;
 
-    private BookPriceOffer(Guid bookId, Guid priceOfferId)
+    public DateTime StartDate { get; private set; } = startDate;
+    public DateTime EndDate { get; private set; } = endDate;
+
+    public static Result<BookPriceOffer> Create(Guid bookId, Guid priceOfferId, DateTime startDate, DateTime endDate)
     {
-        BookId = bookId;
-        PriceOfferId = priceOfferId;
+        return Result.Success(new BookPriceOffer(bookId, priceOfferId, startDate, endDate));
     }
 
-    internal static Result<BookPriceOffer> Create(
-        Guid bookId,
-        Guid priceOfferId)
-    {
-        return Result.Success(new BookPriceOffer(bookId, priceOfferId));
-    }
 }

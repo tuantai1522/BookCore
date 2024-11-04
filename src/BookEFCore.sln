@@ -13,9 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookCore.Shared", "Shared\B
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookCore.Infrastructure", "Infrastructure\BookCore.Infrastructure.csproj", "{6337E6CD-A34C-4861-BF04-66FBBFFD199B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookCore.Queries", "Queries\BookCore.Queries.csproj", "{90C9092C-FBA8-4776-AA9F-0CD7D6FE90BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookCore.Application.Queries", "Queries\BookCore.Application.Queries.csproj", "{90C9092C-FBA8-4776-AA9F-0CD7D6FE90BA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookCore.Commands", "Commands\BookCore.Commands.csproj", "{E1BFE606-D0A1-4F2A-BB17-44C47A5CEB16}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookCore.Application.Commands", "Commands\BookCore.Application.Commands.csproj", "{E1BFE606-D0A1-4F2A-BB17-44C47A5CEB16}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookCore.Messages", "Messages\BookCore.Messages.csproj", "{D8A18F49-5763-4C3B-9B31-7B8B70A5225B}"
 EndProject

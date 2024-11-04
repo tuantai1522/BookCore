@@ -1,14 +1,15 @@
-﻿using Domain.Booking;
+﻿using BookCore.Domain.Booking;
+using BookCore.Shared;
 using Shared;
 
-namespace Domain.Ordering;
+namespace BookCore.Domain.Ordering;
 
-public sealed class Order
-    : Entity, IAggregateRoot
+public sealed class Order(string customerName, Address address)
+    : AggregateRoot<Order, Guid>
 {
-    public string CustomerName { get; private set; } = default!;
+    public string CustomerName { get; private set; } = customerName;
 
-    public Address Address { get; private set; } = default!;
+    public Address Address { get; private set; } = address;
 
     //-----------------------------------------------
     //relationships
@@ -16,18 +17,10 @@ public sealed class Order
 
     private ICollection<LineItem> _items = [];
 
-    private Order(string customerName, Address address)
+    public void AddLineItem(Book book, decimal finalPrice, int quantity)
     {
-        this.CustomerName = customerName;
-        this.Address = address;
-    }
-
-    public void AddLineItems(IEnumerable<LineItem> items)
-    {
-        foreach (var item in items)
-        {
-            this._items.Add(item);
-        }
+        var lineItem = LineItem.Create(book.Id, Id, finalPrice, quantity);
+        _items.Add(lineItem.Value);
     }
 
     public static Result<Order> Create(
@@ -50,6 +43,6 @@ public sealed class Order
         }
 
         Order order = new(customerName, address);
-        return Result.Success<Order>(order);
+        return Result.Success(order);
     }
 }

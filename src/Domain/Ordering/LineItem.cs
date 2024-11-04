@@ -1,30 +1,28 @@
-﻿using Domain.Authoring;
-using Domain.Booking;
+﻿using BookCore.Domain.Booking;
 using Shared;
 
-namespace Domain.Ordering;
+namespace BookCore.Domain.Ordering;
 
 public sealed class LineItem
-    : Entity
+    : Entity<Guid>
 {
     public Guid OrderId { get; private set; }
     public Guid BookId { get; private set; }
-    public Book Book { get; private set; } = default!;
 
     public decimal UnitPrice { get; private set; }
     public int Quantity { get; private set; }
 
     private LineItem(Guid bookId, Guid orderId, decimal unitPrice, int quantity)
     {
-        this.BookId = bookId;
-        this.OrderId = orderId;
-        this.UnitPrice = unitPrice;
-        this.Quantity = quantity;
+        BookId = bookId;
+        OrderId = orderId;
+        UnitPrice = unitPrice;
+        Quantity = quantity;
     }
     public static Result<LineItem> Create(
-        Guid bookId, 
-        Guid orderId, 
-        decimal unitPrice, 
+        Guid bookId,
+        Guid orderId,
+        decimal unitPrice,
         int quantity
     )
     {

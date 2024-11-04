@@ -1,20 +1,13 @@
 ﻿using Shared;
 
-namespace Domain.Booking;
+namespace BookCore.Domain.Booking;
 
-public sealed class Review
-    : Entity
+public sealed class Review(string? voterName, int numStars, string comment)
+        : Entity<Guid>
 {
-    public string? VoterName { get; private set; }
-    public int NumStars { get; private set; }
-    public string Comment { get; private set; } = default!;
-
-    private Review(string? voterName, int numStars, string comment)
-    {
-        VoterName = voterName;
-        NumStars = numStars;
-        Comment = comment;
-    }
+    public string? VoterName { get; private set; } = voterName;
+    public int NumStars { get; private set; } = numStars;
+    public string Comment { get; private set; } = comment;
 
     public static Result<Review> Create(
         string voterName,

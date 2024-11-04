@@ -1,7 +1,5 @@
 ﻿using BookCore.Domain.Booking;
 using BookCore.Infrastructure.Persistence.Contexts;
-using Domain.Authoring;
-using Domain.Booking;
 using Microsoft.EntityFrameworkCore;
 
 namespace BookCore.Infrastructure.Persistence.Repositories;
@@ -30,7 +28,7 @@ public sealed class BookRepository(BookCoreDbContext dbContext) : IBookRepositor
             .AsNoTracking()
             .Include(x => x.Authors)
             .Include(x => x.Reviews)
-            .Include(x => x.PriceOffers)
+            .Include(x => x.BookPriceOffers)
             .FirstOrDefaultAsync(g => g.Id == BookId, cancellationToken);
     }
 

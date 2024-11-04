@@ -1,7 +1,5 @@
-﻿using Shared;
-
-namespace BookCore.Shared;
-public interface IRepository<T> 
-    where T : IAggregateRoot
+﻿namespace BookCore.Shared;
+public interface IRepository<T, TId>
+    where T : AggregateRoot<T, TId>
 {
 }

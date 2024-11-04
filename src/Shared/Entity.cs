@@ -1,12 +1,12 @@
 ﻿namespace Shared;
 
-public abstract class Entity
+public abstract class Entity<TEntity>
 {
-    public Guid Id { get; set; }
+    public TEntity Id { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
 
-    protected Entity(Guid id)
+    protected Entity(TEntity id)
     {
         Id = id;
     }

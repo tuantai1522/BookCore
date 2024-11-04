@@ -1,6 +1,6 @@
-﻿using Domain.Authoring;
-using Domain.Booking;
-using Domain.Ordering;
+﻿using BookCore.Domain.Authoring;
+using BookCore.Domain.Booking;
+using BookCore.Domain.Ordering;
 using Microsoft.EntityFrameworkCore;
 
 namespace BookCore.Infrastructure.Persistence.Contexts;

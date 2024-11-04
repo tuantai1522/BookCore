@@ -1,39 +1,31 @@
-﻿using Domain.Booking;
+﻿using BookCore.Domain.Booking;
+using BookCore.Shared;
 using Shared;
 
-namespace Domain.Authoring;
+namespace BookCore.Domain.Authoring;
 
-public sealed class Author :
-    Entity, IAggregateRoot
+public sealed class Author(string name)
+    : AggregateRoot<Author, Guid>
 {
-    public string Name { get; private set; } = default!;
+    public string Name { get; private set; } = name;
 
     //-----------------------------------------------
     //relationships
 
-    public IReadOnlyCollection<BookAuthor> Books => [.. _books];
+    public IReadOnlyCollection<Book> Books => [.. _books];
 
-    private ICollection<BookAuthor> _books = [];
+    private ICollection<Book> _books = [];
 
-    //constructors
-    private Author(string name)
-    {
-        Name = name;
-    }
     //methods
-    public static Result<Author> Create(
-        string name
-        )
+    public static Result<Author> Create(string name)
     {
         Author author = new(name);
 
-        return Result.Success<Author>(author);
+        return Result.Success(author);
     }
 
-    public void AddBook(BookAuthor book)
+    public void AddBook(Book book)
     {
-        Result<BookAuthor> bookAuthor = BookAuthor.Create(book.Id, Id);
-
-        _books.Add(bookAuthor.Value);
+        _books.Add(book);
     }
 }

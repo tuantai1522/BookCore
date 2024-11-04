@@ -1,9 +1,9 @@
 ﻿using BookCore.Shared;
-using Domain.Booking;
+using Shared;
 
 namespace BookCore.Domain.Booking;
 
-public interface IBookRepository : IRepository<Book>
+public interface IBookRepository : IRepository<Book, Guid>
 {
     public Task<Book?> GetBookById(Guid BookId, CancellationToken cancellationToken = default);
     public void AddBook(Book book);
